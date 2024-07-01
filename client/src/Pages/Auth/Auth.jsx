@@ -47,7 +47,7 @@ function Auth({ User, setAuthBtn, setEditCreateChanelBtn }) {
               />
             </>
           )}
-
+          <p className="btn_Auth">Points: {User?.result?.viewedVideos?.length * 5 || 0}</p>
           <div>
             <GoogleLogout
               clientId={

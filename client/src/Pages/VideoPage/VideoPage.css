@@ -11,6 +11,7 @@
 .video_display_screen_videoPage {
   width: calc(100vw - 4.5rem - 35vw);
   padding: 1rem;
+  position:relative;
 }
 
 .video_ShowVideo_videoPage {
@@ -76,4 +77,15 @@
 .moreVideoBar{
     width: calc(100vw - 4.5rem - 70vw);
     padding: 0 1rem;
+}
+.location-temp-popup {
+  position: absolute;
+  top: 18px;
+  left: 40%;
+  background-color: lightgray;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000;
+  font-size: 14px;
 }

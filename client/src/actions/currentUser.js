@@ -4,3 +4,12 @@ export const setCurrentUser =(data)=>{
         payload:data
     }
 }
+
+// Action Types
+export const UPDATE_USER = 'UPDATE_USER';
+
+// Action Creators
+export const updateUser = (updatedUser) => ({
+  type: UPDATE_USER,
+  payload: updatedUser,
+});

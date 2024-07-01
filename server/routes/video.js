@@ -15,7 +15,7 @@ routes.post("/uploadVideo",auth,upload.single("file"),uploadVideo)
 
 routes.get("/getvideos",getAllvideos);
 routes.patch('/like/:id',auth,likeController)
-routes.patch('/view/:id',viewController)
+routes.patch('/view/:id',auth,viewController)
 
 routes.post('/likeVideo',auth,likeVideoController)
 routes.get('/getAlllikeVideo',getAlllikeVideoController)
