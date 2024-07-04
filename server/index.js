@@ -18,6 +18,7 @@ socketServer(server);
 
 const corsOptions ={
     origin:['http://localhost:3000', 'https://you-tube-clone-frontend-xi.vercel.app/'],
+    methods: ["POST", "GET"],
     credentials:true,          
     optionSuccessStatus:200
 }
