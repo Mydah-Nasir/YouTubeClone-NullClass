@@ -16,7 +16,13 @@ const app = express();
 const server = createServer(app);
 socketServer(server);
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: ["https://you-tube-clone-frontend-725yjtwu7-mydahnasirs-projects.vercel.app"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use('/uploads', express.static(path.join('uploads')));
