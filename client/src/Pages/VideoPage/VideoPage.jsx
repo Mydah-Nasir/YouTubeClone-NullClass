@@ -238,7 +238,7 @@ function VideoPage() {
         >
           <video
             ref={videoRef}
-            src={`https://you-tube-clone-null-class-backend-32aorop9n.vercel.app/${vv?.filePath}`}
+            src={`https://you-tube-clone-null-class-backend.vercel.app/${vv?.filePath}`}
             className="video_ShowVideo_videoPage"
             controls
           ></video>

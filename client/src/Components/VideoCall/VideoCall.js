@@ -28,7 +28,7 @@ const VideoCall = () => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io.connect("https://you-tube-clone-null-class-backend-32aorop9n.vercel.app/");
+    socket.current = io.connect("https://you-tube-clone-null-class-backend.vercel.app/");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })

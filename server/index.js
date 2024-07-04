@@ -16,10 +16,12 @@ const app = express();
 const server = createServer(app);
 socketServer(server);
 
-app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend URL when deploying
-    credentials: true, // If you need to allow credentials (cookies, authorization headers)
-}));
+const corsOptions ={
+    origin:['http://localhost:3000', 'https://you-tube-clone-frontend-xi.vercel.app/'],
+    credentials:true,          
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions))
 
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
