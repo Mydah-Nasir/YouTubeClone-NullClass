@@ -46,7 +46,10 @@ function VideoPage() {
   };
 
   const handleViews = () => {
-    dispatch(viewVideo({ id: vid }));
+    dispatch( viewVideo({
+      id:vid,
+      Viewer: CurrentUser?.result._id,
+    }))
   };
 
   useEffect(() => {
