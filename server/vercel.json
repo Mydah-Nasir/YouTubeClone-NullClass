@@ -4,12 +4,16 @@
         {
             "src": "*.js",
             "use": "@vercel/node"
-        }
+        },
+      {
+        "src": "uploads/**",
+        "use": "@vercel/static"
+    }
     ],
     "routes": [
         {
             "src": "/uploads/(.*)",
-            "dest": "/index.js"
+            "dest": "/uploads"
           },
         {
             "src": "/(.*)",
