@@ -9,7 +9,7 @@ function ShowVideo({vid}) {
      <Link to={`/videopage/${vid?._id}`}>
         <video 
         // src={`http://localhost:5000/${vid.filePath}`}
-        src={`https://you-tube-clone-null-class-backend.vercel.app/${vid.filePath}`}
+         src={`https://youtubeclone-nullclass.onrender.com/${vid.filePath}`}
         className="video_ShowVideo"
         />
      </Link>
