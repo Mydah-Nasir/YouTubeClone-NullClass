@@ -156,7 +156,7 @@ function VideoPage() {
         // Assuming `nextVideoId` is the ID of the next video to play
         const nextVideoId = getNextVideoId(); // Implement this function based on your logic
         if (nextVideoId) {
-          navigate(`/video/${nextVideoId}`);
+          navigate(`/videopage/${nextVideoId}`);
         }
         setMiddleTapCount(0);
       }
