@@ -28,9 +28,11 @@ const VideoCall = () => {
   const peerRef = useRef();
   const socket = useRef();
 
+  socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
+
   useEffect(() => {
-    // socket.current = io.connect("http://localhost:5000/");
-    socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
+    // socket.current = io.connect("http://localhost:5000/")
+    console.log('Use Effect running')
 
     const getUserMedia = async () => {
       try {
@@ -61,7 +63,7 @@ const VideoCall = () => {
     socket.current.on("callEnded", () => {
       endCall();
     });
-  }, []);
+  }, [socket]);
 
   const callPeer = (id) => {
     const peer = new SimplePeer({
