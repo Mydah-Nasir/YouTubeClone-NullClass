@@ -49,7 +49,7 @@ function Navbar({ toggleDrawer, setEditCreateChanelBtn }) {
       const currentHour = now.getHours();
 
       // Disable button and set notification if time is outside 6 PM to 12 AM
-      if (currentHour <= 18) {
+      if (currentHour <= 10) {
         videoCallBtn.removeAttribute('href');
         videoCallBtn.onclick = (e) => {
           e.preventDefault();

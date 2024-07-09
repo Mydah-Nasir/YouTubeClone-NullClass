@@ -183,7 +183,7 @@ const VideoCall = () => {
   const checkTime = () => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
-    return currentHour >= 18 && currentHour <= 23; // 6 PM to 12 AM
+    return currentHour >= 10 && currentHour <= 23; // 6 PM to 12 AM
   };
 
   const endCall = () => {
