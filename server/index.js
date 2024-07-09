@@ -18,7 +18,7 @@ socketServer(server);
 
 const corsOptions ={
     origin: true,
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET","PATCH"],
     credentials:false,          
     optionSuccessStatus:200
 }
