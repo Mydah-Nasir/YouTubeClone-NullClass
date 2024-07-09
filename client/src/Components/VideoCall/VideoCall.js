@@ -35,23 +35,17 @@ const VideoCall = () => {
     socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
     console.log('Use Effect running')
 
-    const getUserMedia = async () => {
-      console.log('In user media')
-      try {
-        const newStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        setStream(newStream);
-        console.log('setting stream state')
-        userVideo.current.srcObject = newStream;
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
         if (userVideo.current) {
-          userVideo.current.srcObject = newStream;
-          console.log('stream set')
+          userVideo.current.srcObject = stream;
         }
-      } catch (error) {
-        console.error("Error accessing media devices:", error);
-      }
-    };
-  
-    getUserMedia(); // Call getUserMedia when the component mounts
+        else{
+          console.log(userVideo)
+        }
+      });
 
     socket.current.on("yourID", (id) => {
       setYourID(id);
