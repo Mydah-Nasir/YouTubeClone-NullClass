@@ -28,13 +28,15 @@ const VideoCall = () => {
   const peerRef = useRef();
   const socket = useRef();
 
-  socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
+  
 
   useEffect(() => {
     // socket.current = io.connect("http://localhost:5000/")
+    socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
     console.log('Use Effect running')
 
     const getUserMedia = async () => {
+      console.log('In user media')
       try {
         const newStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         setStream(newStream);
