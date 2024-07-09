@@ -9,7 +9,6 @@ import {applyMiddleware, compose} from 'redux'
 import {createStore} from 'redux'
 import thunk from "redux-thunk"
 import Reducers from "./Reducers"
-import { ContextProvider } from "./SocketContext";
 
 const store=createStore(Reducers,compose(applyMiddleware(thunk)))
 
@@ -18,9 +17,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-    <ContextProvider>
       <App />
-    </ContextProvider>
     </React.StrictMode>
   </Provider>
 );
