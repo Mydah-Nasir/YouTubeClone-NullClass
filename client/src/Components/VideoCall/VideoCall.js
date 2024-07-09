@@ -7,6 +7,8 @@ import { RiVideoOffFill } from "react-icons/ri";
 import { RiChat4Fill } from "react-icons/ri";
 import { RiChatOffFill } from "react-icons/ri";
 
+const socket = io('https://youtubeclone-nullclass.onrender.com/');
+
 const VideoCall = () => {
   const [stream, setStream] = useState(null);
   const [receivingCall, setReceivingCall] = useState(false);
@@ -25,11 +27,11 @@ const VideoCall = () => {
   const screenStream = useRef();
   const mediaRecorder = useRef();
   const peerRef = useRef();
-  const socket = useRef();
+  //const socket = useRef();
 
   useEffect(() => {
     // socket.current = io.connect("http://localhost:5000/");
-    socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
+    // socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
@@ -40,18 +42,18 @@ const VideoCall = () => {
         }
       });
 
-    socket.current.on("yourID", (id) => {
+    socket.on("yourID", (id) => {
       setYourID(id);
     });
 
-    socket.current.on("hey", (data) => {
+    socket.on("hey", (data) => {
       setReceivingCall(true);
       setCaller(data.from);
       setCallerSignal(data.signal);
     });
 
     // Added this to handle end call event
-    socket.current.on("callEnded", () => {
+    socket.on("callEnded", () => {
       endCall();
     });
   }, []);
@@ -64,7 +66,7 @@ const VideoCall = () => {
     });
 
     peer.on("signal", (data) => {
-      socket.current.emit("callUser", {
+      socket.emit("callUser", {
         userToCall: id,
         signalData: data,
         from: yourID,
@@ -81,7 +83,7 @@ const VideoCall = () => {
       endCall();
     });
 
-    socket.current.on("callAccepted", (signal) => {
+    socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
       setInCall(true);
       peer.signal(signal);
@@ -98,7 +100,7 @@ const VideoCall = () => {
     });
 
     peer.on("signal", (data) => {
-      socket.current.emit("acceptCall", { signal: data, to: caller });
+      socket.emit("acceptCall", { signal: data, to: caller });
     });
 
     peer.on("stream", (stream) => {
@@ -199,7 +201,7 @@ const VideoCall = () => {
       partnerVideo.current.srcObject = null;
     }
     // Emit endCall event to the other user
-    socket.current.emit('endCall', { to: caller || friendID });
+    socket.emit('endCall', { to: caller || friendID });
   };
 
   // Animation for trailing dots
