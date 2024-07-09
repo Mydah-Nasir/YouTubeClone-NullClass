@@ -31,20 +31,13 @@ const VideoCall = () => {
   
 
   useEffect(() => {
-    // socket.current = io.connect("http://localhost:5000/")
     socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
-    console.log('Use Effect running')
+    console.log('Use Effect running');
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
         setStream(stream);
-        if (userVideo.current) {
-          userVideo.current.srcObject = stream;
-        }
-        else{
-          console.log(userVideo)
-        }
       });
 
     socket.current.on("yourID", (id) => {
@@ -57,11 +50,16 @@ const VideoCall = () => {
       setCallerSignal(data.signal);
     });
 
-    // Added this to handle end call event
     socket.current.on("callEnded", () => {
       endCall();
     });
   }, []);
+
+  useEffect(() => {
+    if (userVideo.current && stream) {
+      userVideo.current.srcObject = stream;
+    }
+  }, [stream, userVideo]);
 
   const callPeer = (id) => {
     const peer = new SimplePeer({
