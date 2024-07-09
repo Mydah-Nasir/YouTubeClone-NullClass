@@ -41,6 +41,7 @@ const VideoCall = () => {
         const newStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         setStream(newStream);
         console.log('setting stream state')
+        userVideo.current.srcObject = newStream;
         if (userVideo.current) {
           userVideo.current.srcObject = newStream;
           console.log('stream set')
