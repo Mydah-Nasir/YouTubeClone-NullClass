@@ -40,6 +40,7 @@ const VideoCall = () => {
       try {
         const newStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         setStream(newStream);
+        console.log('setting stream state')
         if (userVideo.current) {
           userVideo.current.srcObject = newStream;
           console.log('stream set')
@@ -65,7 +66,7 @@ const VideoCall = () => {
     socket.current.on("callEnded", () => {
       endCall();
     });
-  }, [socket]);
+  }, []);
 
   const callPeer = (id) => {
     const peer = new SimplePeer({
