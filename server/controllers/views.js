@@ -32,6 +32,7 @@ export const viewController = async (req, res) => {
       updatedUser = await users.findByIdAndUpdate(Viewer, {
         $addToSet: { viewedVideos: _id },
       });
+      console.log('Mongodb view array updated',updatedUser)
     }
     else{
       updatedUser = user;
