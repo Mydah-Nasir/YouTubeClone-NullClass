@@ -20,6 +20,7 @@ export const viewController = async (req, res) => {
       { new: true }
     );
     let updatedUser;
+    let newUser;
     // Find the user and update their viewed videos list
     const user = await users.findById(Viewer);
     if (!user) {
@@ -32,12 +33,13 @@ export const viewController = async (req, res) => {
       updatedUser = await users.findByIdAndUpdate(Viewer, {
         $addToSet: { viewedVideos: _id },
       });
+      newUser = await users.findById(Viewer);
     }
     else{
-      updatedUser = user;
+      newUser = user;
     }
 
-    res.status(200).json({ video: updateview, user: updatedUser});
+    res.status(200).json({ video: updateview, user: newUser});
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
