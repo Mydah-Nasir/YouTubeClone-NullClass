@@ -40,6 +40,7 @@ export const viewVideo=(ViewDate)=>async(dispatch)=>{
     const {video, user} = response.data;
     dispatch({type:'POST_VIEWS',payload:video})
     dispatch(updateUser(user))
+    console.log('User Updated',user)
     dispatch(getAllVideo())
   } catch (error) {
     console.log(error)
