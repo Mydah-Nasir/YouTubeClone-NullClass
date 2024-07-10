@@ -32,13 +32,13 @@ export const viewController = async (req, res) => {
       updatedUser = await users.findByIdAndUpdate(Viewer, {
         $addToSet: { viewedVideos: _id },
       });
-      console.log('Mongodb view array updated',updatedUser)
+      user.viewedVideos.push(_id);
     }
     else{
       updatedUser = user;
     }
 
-    res.status(200).json({ video: updateview, user: updatedUser});
+    res.status(200).json({ video: updateview, user: user});
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
