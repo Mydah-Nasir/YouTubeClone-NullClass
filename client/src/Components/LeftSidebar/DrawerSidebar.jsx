@@ -71,16 +71,6 @@ function DrawerSidebar({ toggleDrawer,toggleDrawerSidebar }) {
               <div className="text_sidebar_icon">Library</div>
             </p>
           </NavLink>
-          <NavLink to={'/videocall'} className="icon_sidebar_div">
-            <p>
-              <MdOutlineVideoLibrary
-                size={22}
-                className={"icon_sidebar"}
-                style={{ margin: "auto 0.7rem" }}
-              />
-              <div className="text_sidebar_icon">Video Call</div>
-            </p>
-          </NavLink>
           <NavLink to={'/history'} className="icon_sidebar_div">
             <p>
               <FaHistory

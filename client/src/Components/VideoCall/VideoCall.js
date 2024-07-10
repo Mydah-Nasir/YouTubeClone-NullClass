@@ -6,7 +6,8 @@ import { RiVideoOnFill } from "react-icons/ri";
 import { RiVideoOffFill } from "react-icons/ri";
 import { RiChat4Fill } from "react-icons/ri";
 import { RiChatOffFill } from "react-icons/ri";
-import { SocketContext } from "../../SocketContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const VideoCall = () => {
   const [stream, setStream] = useState(null);
@@ -28,11 +29,9 @@ const VideoCall = () => {
   const peerRef = useRef();
   const socket = useRef();
 
-  
-
   useEffect(() => {
     socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
-    console.log('Use Effect running');
+    console.log("Use Effect running");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
@@ -159,6 +158,7 @@ const VideoCall = () => {
 
   const startRecording = () => {
     setRecording(true);
+    toast.info("Recording started");
     mediaRecorder.current = new MediaRecorder(stream);
     mediaRecorder.current.ondataavailable = (event) => {
       if (event.data.size > 0) {
@@ -170,6 +170,7 @@ const VideoCall = () => {
 
   const stopRecording = () => {
     setRecording(false);
+    toast.info("Recording stopped");
     mediaRecorder.current.stop();
     const blob = new Blob(recordedChunks, {
       type: "video/webm",
@@ -188,7 +189,7 @@ const VideoCall = () => {
   const checkTime = () => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
-    return currentHour >= 10 && currentHour <= 23; // 6 PM to 12 AM
+    return currentHour >= 18 && currentHour <= 23; // 6 PM to 12 AM
   };
 
   const endCall = () => {
@@ -198,13 +199,13 @@ const VideoCall = () => {
     setCallAccepted(false);
     setInCall(false);
     setReceivingCall(false);
-    setCaller('');
+    setCaller("");
     setCallerSignal(null);
     if (partnerVideo.current) {
       partnerVideo.current.srcObject = null;
     }
     // Emit endCall event to the other user
-    socket.current.emit('endCall', { to: caller || friendID });
+    socket.current.emit("endCall", { to: caller || friendID });
   };
 
   // Animation for trailing dots
@@ -382,6 +383,7 @@ const VideoCall = () => {
                 </button>
               </div>
             )}
+            <ToastContainer position="top-right" autoClose={5000} />
           </div>
           <div style={containerStyle}>
             <div>
@@ -397,12 +399,12 @@ const VideoCall = () => {
             </div>
             <div>
               {recording ? (
-                <button onClick={stopRecording} style={grayBtnStyle}>
-                  <RiVideoOffFill style={grayIconStyle} />
+                <button onClick={stopRecording} style={endCallStyle}>
+                  <RiVideoOnFill style={grayIconStyle} />
                 </button>
               ) : (
                 <button onClick={startRecording} style={grayBtnStyle}>
-                  <RiVideoOnFill style={grayIconStyle} />
+                  <RiVideoOffFill style={grayIconStyle} />
                 </button>
               )}
             </div>
@@ -414,10 +416,13 @@ const VideoCall = () => {
               )}
             </div>
           </div>
+         
         </div>
       ) : (
         <div>
-          <h1>Video calls are only allowed from 6 PM to 12 AM</h1>
+          <h1 style={{ color: "white" }}>
+            Video calls are only allowed from 6 PM to 12 AM
+          </h1>
         </div>
       )}
     </div>
