@@ -12,6 +12,7 @@ function Auth({ User, setAuthBtn, setEditCreateChanelBtn }) {
     dispatch(setCurrentUser(null));
     alert("Log Out SuccessFully");
   };
+  console.log(User)
   
   return (
     <div className="Auth_container" onClick={() => setAuthBtn(false)}>
