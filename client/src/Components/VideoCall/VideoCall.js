@@ -7,6 +7,7 @@ import { RiVideoOffFill } from "react-icons/ri";
 import { RiChat4Fill } from "react-icons/ri";
 import { RiChatOffFill } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
+import { useReactMediaRecorder } from "react-media-recorder";
 import "react-toastify/dist/ReactToastify.css";
 
 const VideoCall = () => {
@@ -28,6 +29,12 @@ const VideoCall = () => {
   const mediaRecorder = useRef();
   const peerRef = useRef();
   const socket = useRef();
+  const { startRecording, stopRecording, mediaBlobUrl, status, previewStream } =
+    useReactMediaRecorder({
+      screen: true,
+      audio: true,
+      blobPropertyBag: { type: "video/webm" },
+    });
 
   useEffect(() => {
     socket.current = io.connect("https://youtubeclone-nullclass.onrender.com/");
@@ -156,40 +163,22 @@ const VideoCall = () => {
     peer.replaceTrack(sender, newTrack, peer.streams[0]);
   };
 
-  const startRecording = () => {
+  const handleStartRecording = () => {
     setRecording(true);
     toast.info("Recording started");
-    mediaRecorder.current = new MediaRecorder(stream);
-    mediaRecorder.current.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        setRecordedChunks((prev) => [...prev, event.data]);
-      }
-    };
-    mediaRecorder.current.start();
+    startRecording();
   };
 
-  const stopRecording = () => {
+  const handleStopRecording = () => {
     setRecording(false);
     toast.info("Recording stopped");
-    mediaRecorder.current.stop();
-    const blob = new Blob(recordedChunks, {
-      type: "video/webm",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = "recording.webm";
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    setRecordedChunks([]);
+    stopRecording();
   };
   //this will stay here
   const checkTime = () => {
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
-    return currentHour >= 18 && currentHour <= 23; // 6 PM to 12 AM
+    return currentHour >= 9 && currentHour <= 23; // 6 PM to 12 AM
   };
 
   const endCall = () => {
@@ -399,11 +388,11 @@ const VideoCall = () => {
             </div>
             <div>
               {recording ? (
-                <button onClick={stopRecording} style={endCallStyle}>
+                <button onClick={handleStopRecording} style={endCallStyle}>
                   <RiVideoOnFill style={grayIconStyle} />
                 </button>
               ) : (
-                <button onClick={startRecording} style={grayBtnStyle}>
+                <button onClick={handleStartRecording} style={grayBtnStyle}>
                   <RiVideoOffFill style={grayIconStyle} />
                 </button>
               )}
@@ -416,7 +405,33 @@ const VideoCall = () => {
               )}
             </div>
           </div>
-         
+          <div style={containerStyle}>
+            {mediaBlobUrl && (
+              <div>
+                <h2 style={{ color: "white", textAlign: "center" }}>Preview</h2>
+                <div style={containerStyle}>
+                  <video
+                    src={mediaBlobUrl}
+                    controls
+                    style={{
+                      width: "500px",
+                      marginBottom: "10px",
+                      marginRight: "20px",
+                    }}
+                  />
+                </div>
+                <div style={containerStyle}>
+                  <a
+                    href={mediaBlobUrl}
+                    download="recording.webm"
+                    style={{ color: "white", textAlign: "center",marginBottom: "20px" }}
+                  >
+                    Download Recording
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div>
