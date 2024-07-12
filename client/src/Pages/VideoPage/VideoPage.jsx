@@ -75,7 +75,7 @@ function VideoPage() {
       }
     };
 
-  }, []);
+  }, [vid]);
 
   const handleDoubleClick = (e) => {
     const video = videoRef.current;
