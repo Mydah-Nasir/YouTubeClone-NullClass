@@ -6,7 +6,7 @@ import moment from "moment";
 import LikeWatchLaterSaveBtns from "./LikeWatchLaterSaveBtns";
 import "./VideoPage.css";
 import { addToHistory } from "../../actions/History";
-import { viewVideo } from "../../actions/video";
+import { viewVideo, addPoints } from "../../actions/video";
 
 function VideoPage() {
   const { vid } = useParams();
@@ -45,18 +45,36 @@ function VideoPage() {
     }
   };
 
-  const handleViews = () => {
+  const handleViews=()=>{
     dispatch( viewVideo({
+      id:vid
+    }))
+  }
+
+  const handlePoints = () => {
+    dispatch( addPoints({
       id:vid,
       Viewer: CurrentUser?.result._id,
     }))
+    console.log("Points Added")
   };
-
+  
   useEffect(() => {
     if (CurrentUser) {
       handleHistory();
     }
     handleViews();
+    const video = videoRef.current;
+    if (video) {
+      video.addEventListener('ended', handlePoints);
+    }
+
+    return () => {
+      if (video) {
+        video.removeEventListener('ended', handlePoints);
+      }
+    };
+
   }, []);
 
   const handleDoubleClick = (e) => {
@@ -238,7 +256,7 @@ function VideoPage() {
         >
           <video
             ref={videoRef}
-            // src={`http://localhost:5000/${vv?.filePath}`}
+             //src={`http://localhost:5000/${vv?.filePath}`}
             src={`https://youtubeclone-nullclass.onrender.com/${vv?.filePath}`}
             className="video_ShowVideo_videoPage"
             controls

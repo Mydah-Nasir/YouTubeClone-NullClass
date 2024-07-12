@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API = axios.create({ baseURL: `http://localhost:5000/` });
- const API = axios.create({ baseURL: `https://youtubeclone-nullclass.onrender.com/` });
+//const API = axios.create({ baseURL: `http://localhost:5000/` });
+const API = axios.create({ baseURL: `https://youtubeclone-nullclass.onrender.com/` });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
@@ -21,7 +21,8 @@ export const uploadVideo = (fileData, fileOptions) =>
   API.post("/video/uploadVideo", fileData, fileOptions);
 export const getVideos = () => API.get("/video/getvideos");
 export const likeVideo = (id, Like) => API.patch(`/video/like/${id}`, { Like });
-export const viewsVideo = (id,Viewer) => API.patch(`/video/view/${id}`,{Viewer});
+export const viewsVideo = (id) => API.patch(`/video/view/${id}`);
+export const addPoints = (id,Viewer) => API.patch(`/video/points/${id}`,{Viewer});
 
 export const addToLikedVideo = (likedVideoData) =>
   API.post("/video/likeVideo", likedVideoData);

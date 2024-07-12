@@ -6,6 +6,7 @@ import {viewController} from '../controllers/views.js'
 import {likeVideoController,getAlllikeVideoController,deleteLikeVideoController} from '../controllers/likeVideo.js'
 import {watchLaterController,getAllwatchLaterController,deletewatchLaterController} from '../controllers/watchLater.js'
 import {HistoryController,getAllHistoryController,deleteHistoryController} from '../controllers/History.js'
+import { pointsController } from '../controllers/points.js'
 import upload from '../Helpers/fileHelpers.js'
 import auth from '../middleware/auth.js'
 
@@ -15,7 +16,8 @@ routes.post("/uploadVideo",auth,upload.single("file"),uploadVideo)
 
 routes.get("/getvideos",getAllvideos);
 routes.patch('/like/:id',auth,likeController)
-routes.patch('/view/:id',auth,viewController)
+routes.patch('/view/:id',viewController)
+routes.patch('/points/:id',auth,pointsController)
 
 routes.post('/likeVideo',auth,likeVideoController)
 routes.get('/getAlllikeVideo',getAlllikeVideoController)
